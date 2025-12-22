@@ -27,7 +27,7 @@ WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 
 # Expose port (Render / Docker use PORT env)
-EXPOSE 8080
+EXPOSE 8086
 
 # Start app
 ENTRYPOINT ["java","-jar","app.jar"]
