@@ -1,6 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+    <style>
+        #chat-section .card {
+            background: #121212;
+            color: white;
+            border: 1px solid #333;
+        }
+
+        #chat-section .card-header {
+            background: #1f1f1f !important;
+            color: #fff;
+        }
+
+        #messages {
+            background: #1a1a1a !important;
+            color: #fff;
+        }
+
+        #chat-section .card-footer {
+            background: #1f1f1f;
+        }
+
+        #msg {
+            background: #2a2a2a;
+            color: white;
+            border: 1px solid #444;
+        }
+
+        #msg::placeholder {
+            color: #ccc;
+        }
+    </style>
+
     <meta charset="UTF-8">
     <title>KakaBot Messenger</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,7 +61,7 @@
     <div id="send-request-box" style="display:none;">
         <button class="btn btn-warning mb-3"
                 onclick="sendFriendRequest()">
-            Send Friend Request to nitish
+            Send Friend Request to ramukaka
         </button>
     </div>
 
@@ -41,8 +74,9 @@
 
             <div id="messages"
                  class="card-body"
-                 style="height:300px; overflow-y:auto; background:#f8f9fa;">
+                 style="height:300px; overflow-y:auto; background:#1e1e1e; color:white;">
             </div>
+
 
             <div class="card-footer d-flex">
                 <input id="msg" class="form-control"
@@ -63,7 +97,7 @@
     const token = localStorage.getItem("token");
     if (!token) location.href = "/login";
 
-    const ADMIN = "nitish";
+    const ADMIN = "ramukaka";
     let currentChatUser = null;
 
     function headers() {
@@ -85,18 +119,18 @@
             const info = document.getElementById("info");
 
             if (status === "NONE") {
-                info.innerText = "You are not connected with nitish.";
+                info.innerText = "You are not connected with ramukaka.";
                 document.getElementById("send-request-box").style.display = "block";
             }
             else if (status === "PENDING") {
-                info.innerText = "Waiting for nitish to accept your request.";
+                info.innerText = "Waiting ramukaka to accept your request.";
             }
             else if (status === "ACCEPTED") {
-                info.innerText = "Connected with nitish. You can chat now.";
-                openChat("nitish"); // ✅ USER CHAT OPEN
+                info.innerText = "Connected with ramukaka. You can chat now.";
+                openChat("ramukaka"); // ✅ USER CHAT OPEN
             }
             else if (status === "ADMIN") {
-                info.innerText = "Admin Dashboard (nitish)";
+                info.innerText = "Admin Dashboard (ramukaka)";
                 loadPendingRequests();
                 autoOpenLastChat(); // ✅ ADMIN CHAT OPEN
             }
