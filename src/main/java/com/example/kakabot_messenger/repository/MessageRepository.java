@@ -2,25 +2,20 @@ package com.example.kakabot_messenger.repository;
 
 import com.example.kakabot_messenger.model.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
-    // ✅ CORRECT & SAFE QUERY
-    @Query("""
-        SELECT m FROM Message m
-        WHERE (m.sender = :u1 AND m.receiver = :u2)
-           OR (m.sender = :u2 AND m.receiver = :u1)
-        ORDER BY m.createdAt ASC
-    """)
-    List<Message> findChatBetween(
-            @Param("u1") String user1,
-            @Param("u2") String user2
+    List<Message> findBySenderAndReceiverOrSenderAndReceiverOrderByCreatedAtAsc(
+            String sender1, String receiver1,
+            String sender2, String receiver2
     );
 
-    // Admin helper
+    Optional<Message> findTopBySenderOrReceiverOrderByCreatedAtDesc(
+            String sender, String receiver
+    );
+
     List<Message> findAllByOrderByCreatedAtAsc();
 }

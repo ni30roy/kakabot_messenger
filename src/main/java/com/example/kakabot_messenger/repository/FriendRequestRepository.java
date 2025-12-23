@@ -21,4 +21,6 @@ public interface FriendRequestRepository
             String receiver,
             FriendRequest.Status status
     );
+
+
 }

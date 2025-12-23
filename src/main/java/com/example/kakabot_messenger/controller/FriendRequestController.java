@@ -6,23 +6,22 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/friend")
 public class FriendRequestController {
 
     private final FriendRequestRepository repo;
-    private static final String ADMIN = "nitish";
+    private static final String ADMIN = "ramukaka";
 
     public FriendRequestController(FriendRequestRepository repo) {
         this.repo = repo;
     }
 
-    // 1️⃣ User → nitish friend request
+    // 1️⃣ USER → ADMIN REQUEST
     @PostMapping("/request")
     public String sendRequest(Authentication auth) {
-
         String sender = auth.getName();
 
         if (sender.equals(ADMIN)) {
@@ -39,28 +38,25 @@ public class FriendRequestController {
         fr.setStatus(FriendRequest.Status.PENDING);
 
         repo.save(fr);
-        return "Friend request sent to nitish";
+        return "Friend request sent";
     }
 
-    // 2️⃣ nitish sees pending requests
+    // 2️⃣ ADMIN → PENDING REQUESTS
     @GetMapping("/pending")
     public List<FriendRequest> pending(Authentication auth) {
-
-        if (!auth.getName().equals("nitish")) {
+        if (!auth.getName().equals(ADMIN)) {
             throw new RuntimeException("Unauthorized");
         }
 
         return repo.findByReceiverAndStatus(
-                "nitish",
+                ADMIN,
                 FriendRequest.Status.PENDING
         );
     }
 
-    // 3️⃣ nitish accepts request
+    // 3️⃣ ADMIN → ACCEPT REQUEST
     @PostMapping("/accept/{id}")
-    public String accept(@PathVariable Long id,
-                         Authentication auth) {
-
+    public String accept(@PathVariable Long id, Authentication auth) {
         if (!auth.getName().equals(ADMIN)) {
             throw new RuntimeException("Unauthorized");
         }
@@ -72,10 +68,25 @@ public class FriendRequestController {
         return "Accepted";
     }
 
-    // 4️⃣ ⭐ STATUS CHECK (YAHI WALA METHOD)
+    // ⭐ 4️⃣ ADMIN → ACCEPTED USERS LIST (THIS WAS MISSING)
+    @GetMapping("/accepted")
+    public List<String> acceptedUsers(Authentication auth) {
+        if (!auth.getName().equals(ADMIN)) {
+            throw new RuntimeException("Unauthorized");
+        }
+
+        return repo.findByReceiverAndStatus(
+                        ADMIN,
+                        FriendRequest.Status.ACCEPTED
+                )
+                .stream()
+                .map(FriendRequest::getSender)
+                .collect(Collectors.toList());
+    }
+
+    // 5️⃣ STATUS (USER SIDE)
     @GetMapping("/status")
     public String status(Authentication auth) {
-
         String user = auth.getName();
 
         if (user.equals(ADMIN)) {

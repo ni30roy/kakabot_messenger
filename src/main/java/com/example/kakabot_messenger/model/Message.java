@@ -7,6 +7,10 @@ import java.time.LocalDateTime;
 @Table(name = "messages")
 public class Message {
 
+    private boolean deletedBySender=false;
+
+    private boolean deletedByReceiver=true;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,6 +22,22 @@ public class Message {
     private String content;
 
     private LocalDateTime createdAt;
+
+    public boolean isDeletedByReceiver() {
+        return deletedByReceiver;
+    }
+
+    public void setDeletedByReceiver(boolean deletedByReceiver) {
+        this.deletedByReceiver = deletedByReceiver;
+    }
+
+    public boolean isDeletedBySender() {
+        return deletedBySender;
+    }
+
+    public void setDeletedBySender(boolean deletedBySender) {
+        this.deletedBySender = deletedBySender;
+    }
 
     // getters & setters
     public Long getId() { return id; }
