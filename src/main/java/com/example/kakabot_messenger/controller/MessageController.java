@@ -14,7 +14,7 @@ import java.util.List;
 public class MessageController {
 
     private final MessageRepository repo;
-    private static final String ADMIN = "ramukaka";
+    private static final String ADMIN = "ramukaka-munna";
 
     public MessageController(MessageRepository repo) {
         this.repo = repo;

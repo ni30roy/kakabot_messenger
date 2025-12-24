@@ -61,7 +61,7 @@
     <div id="send-request-box" style="display:none;">
         <button class="btn btn-warning mb-3"
                 onclick="sendFriendRequest()">
-            Send Friend Request to ramukaka
+            Send Friend Request to ramukaka-munna
         </button>
     </div>
 
@@ -97,7 +97,7 @@
     const token = localStorage.getItem("token");
     if (!token) location.href = "/login";
 
-    const ADMIN = "ramukaka";
+    const ADMIN = "ramukaka-munna";
     let currentChatUser = null;
 
     function headers() {
@@ -119,18 +119,18 @@
             const info = document.getElementById("info");
 
             if (status === "NONE") {
-                info.innerText = "You are not connected with ramukaka.";
+                info.innerText = "You are not connected with ramukaka-munna.";
                 document.getElementById("send-request-box").style.display = "block";
             }
             else if (status === "PENDING") {
-                info.innerText = "Waiting ramukaka to accept your request.";
+                info.innerText = "Waiting ramukaka-munna to accept your request.";
             }
             else if (status === "ACCEPTED") {
-                info.innerText = "Connected with ramukaka. You can chat now.";
-                openChat("ramukaka"); // ✅ USER CHAT OPEN
+                info.innerText = "Connected with ramukaka-munna. You can chat now.";
+                openChat("ramukaka-munna"); // ✅ USER CHAT OPEN
             }
             else if (status === "ADMIN") {
-                info.innerText = "Admin Dashboard (ramukaka)";
+                info.innerText = "Admin Dashboard (ramukaka-munna)";
                 loadPendingRequests();
                 autoOpenLastChat(); // ✅ ADMIN CHAT OPEN
             }

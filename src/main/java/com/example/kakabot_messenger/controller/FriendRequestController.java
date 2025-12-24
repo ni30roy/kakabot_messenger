@@ -13,13 +13,13 @@ import java.util.List;
 public class FriendRequestController {
 
     private final FriendRequestRepository repo;
-    private static final String ADMIN = "ramukaka";
+    private static final String ADMIN = "ramukaka-munna";
 
     public FriendRequestController(FriendRequestRepository repo) {
         this.repo = repo;
     }
 
-    // 1️⃣ User → ramukaka friend request
+    // 1️⃣ User → ramukaka-munna friend request
     @PostMapping("/request")
     public String sendRequest(Authentication auth) {
 
@@ -39,24 +39,24 @@ public class FriendRequestController {
         fr.setStatus(FriendRequest.Status.PENDING);
 
         repo.save(fr);
-        return "Friend request sent to ramukaka";
+        return "Friend request sent to ramukaka-munna";
     }
 
-    // 2️⃣ ramukaka sees pending requests
+    // 2️⃣ ramukaka-munna sees pending requests
     @GetMapping("/pending")
     public List<FriendRequest> pending(Authentication auth) {
 
-        if (!auth.getName().equals("ramukaka")) {
+        if (!auth.getName().equals("ramukaka-munna")) {
             throw new RuntimeException("Unauthorized");
         }
 
         return repo.findByReceiverAndStatus(
-                "ramukaka",
+                "ramukaka-munna",
                 FriendRequest.Status.PENDING
         );
     }
 
-    // 3️⃣ ramukaka accepts request
+    // 3️⃣ ramukaka-munna accepts request
     @PostMapping("/accept/{id}")
     public String accept(@PathVariable Long id,
                          Authentication auth) {
